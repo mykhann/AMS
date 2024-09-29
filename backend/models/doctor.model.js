@@ -18,9 +18,17 @@ const doctorSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    email:{
+        type: String,
+        required: true
+    },
     fees: {
         type: Number,
         required: true
+    },
+    avatar:{
+        type: String,
+       
     },
     hospitals: [
         {
