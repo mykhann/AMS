@@ -1,25 +1,32 @@
-import cloudinary from "cloudinary"
-import "dotenv/config"
+import cloudinary from "cloudinary";
+import "dotenv/config";
 
 cloudinary.config({
-    cloud_name:process.env.CLOUD_NAME,
-    api_key:process.env.CLOUD_KEY,
-    api_secret:process.env.CLOUD_SECRET
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_KEY,
+    api_secret: process.env.CLOUD_SECRET
 });
 
-
-const uploadOnCloudinary= async(fileBuffer,fileName)=>{
+const uploadOnCloudinary = async (fileBuffer, fileName) => {
     try {
-        const result=await cloudinary.v2.uploader.upload(fileBuffer,{
-            resource_type:"auto",
-            public_id:fileName
-        })
-        return result;
-        
-    } catch (error) {
-        console.error("cloudinary upload error" +error)
-        
-    }
+        const result = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.v2.uploader.upload_stream(
+                { resource_type: "auto", public_id: fileName },
+                (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+            uploadStream.end(fileBuffer);
+        });
 
-}
-export {cloudinary,uploadOnCloudinary}
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export { cloudinary, uploadOnCloudinary };

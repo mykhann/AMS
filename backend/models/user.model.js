@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    avatar:{
+        type: String,
+       
+    },
     appointments: [
         {
             type: mongoose.Schema.Types.ObjectId,
