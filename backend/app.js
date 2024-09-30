@@ -5,7 +5,8 @@ const app=express();
 connectToDatabase()
 import userRoutes from "./routes/user.routes.js"
 import doctorRoutes from "./routes/doctor.routes.js"
-import hospitalsRoutes from "./routes/hospital.routes.js"
+import appointmentRoutes from "./routes/appointment.routes.js"
+
 import cookieParser from "cookie-parser";
 
 
@@ -17,7 +18,8 @@ app.use(cookieParser())
 // routers
 app.use("/api/v1/users",userRoutes)
 app.use("/api/v1/doctors",doctorRoutes)
-app.use("/api/v1/hospitals",hospitalsRoutes)
+app.use("/api/v1/appointments",appointmentRoutes)
+
 
 
 
