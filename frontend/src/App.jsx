@@ -5,12 +5,12 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import { Provider } from "react-redux";
 import store from "./reduxStore/store";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./app.css"
+import "./app.css";
 import ProfilePage from "./components/profile/ProfilePage";
 import AppointmentPage from "./components/Doctors/AppointmentPage";
-
+import { NextUIProvider } from '@nextui-org/react'; 
 
 const router = createBrowserRouter([
   {
@@ -42,8 +42,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
-      <ToastContainer />
+      <NextUIProvider>  
+        <RouterProvider router={router} />
+        <ToastContainer />
+      </NextUIProvider>
     </Provider>
   );
 }
