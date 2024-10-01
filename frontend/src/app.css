@@ -1,0 +1,26 @@
+.Toastify__toast {
+    font-size: 12px;
+    padding: 8px;
+    min-height: 20px;
+  }
+  
+  .Toastify__toast-body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .Toastify__close-button {
+    font-size: 10px;
+  }
+  /* Success Toast */
+.Toastify__toast--success {
+    background-color: green;
+    color: white;
+  }
+  
+  /* Error Toast */
+  .Toastify__toast--error {
+    background-color: red;
+    color: white;
+  }
+  

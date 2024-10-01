@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Menu, X, User } from "lucide-react"; 
+import { Menu, X, User, SpaceIcon } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Button } from "@material-tailwind/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const navigate = useNavigate();
+
+  const { user } = useSelector((store) => store.auth);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -15,7 +19,10 @@ const Navbar = () => {
     <nav className="relative bg-black text-white p-4 shadow-md ">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-       <Link to="/"> <div className="text-2xl font-bold tracking-wider">HealthCare</div></Link>
+        <Link to="/">
+
+          <div className="text-2xl font-bold tracking-wider">HealthCare</div>
+        </Link>
 
         {/* Links for larger screens */}
         <div className="hidden md:flex space-x-6">
@@ -26,11 +33,19 @@ const Navbar = () => {
             About Us
           </Link>
         </div>
-
-        {/* Profile Icon */}
-        <div className="flex items-center space-x-4">
-          <User  className="h-6 w-6 cursor-pointer hover:text-gray-300" />
-        </div>
+        {user ? (
+          <div className="flex items-center space-x-4">
+            <User onClick={()=>navigate("/profile")}  className="h-6 w-6 cursor-pointer hover:text-gray-300" />
+          </div>
+        ) : (
+          <Button
+            onClick={() => navigate("/login")}
+            className="cursor-pointer bg-gray-800 hover:bg-gray-900"
+          >
+            Login
+          </Button>
+        )}
+   
 
         {/* Hamburger Menu */}
         <div className="md:hidden">
@@ -52,6 +67,18 @@ const Navbar = () => {
           <Link to="/about" className="block py-2 hover:bg-blue-700 rounded-md">
             About Us
           </Link>
+          {user ? (
+          <div className="flex items-center space-x-4">
+            <User className="h-6 w-6 cursor-pointer hover:text-gray-300" />
+          </div>
+        ) : (
+          <Button
+            onClick={() => navigate("/login")}
+            className="cursor-pointer bg-red-800 hover:bg-red-900"
+          >
+            Login
+          </Button>
+        )}
         </div>
       )}
     </nav>

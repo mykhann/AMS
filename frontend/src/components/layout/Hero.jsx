@@ -2,9 +2,9 @@ const Hero = () => {
     return (
       <section className="h-screen bg-cyan-950 flex flex-col justify-center items-center text-center">
         {/* Clean 3D Heading */}
-        <h1 className="text-6xl md:text-8xl font-extrabold text-red-600 mb-10 relative inline-block hero-text">
+        {/* <h1 className="text-6xl md:text-8xl font-extrabold text-red-600 mb-10 relative inline-block hero-text">
           Book Appointments <br /> With Top Doctors
-        </h1>
+        </h1> */}
   
         {/* Book Appointment Button */}
         <button className="mt-6 px-10 py-4 bg-red-600 text-black font-semibold text-xl rounded-lg shadow-lg hover:bg-red-800 hover:scale-105 transition transform duration-300 ease-in-out">
