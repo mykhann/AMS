@@ -11,6 +11,7 @@ import "./app.css";
 import ProfilePage from "./components/profile/ProfilePage";
 import AppointmentPage from "./components/Doctors/AppointmentPage";
 import { NextUIProvider } from '@nextui-org/react'; 
+import EditProfile from "./components/profile/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
+    path: "/edit-profile",
+    element: <EditProfile />,
+  },
+  {
     path: "/profile",
     element: <ProfilePage />,
   },
@@ -37,6 +42,7 @@ const router = createBrowserRouter([
     path: "/appointment/:id",
     element: <AppointmentPage />,
   },
+ 
 ]);
 
 function App() {

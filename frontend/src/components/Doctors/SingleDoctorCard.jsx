@@ -35,6 +35,7 @@ const SingleDoctorCard = () => {
               <Typography variant="h4" color="blue-gray">
                 {singleDoctor.specialization}
               </Typography>
+           
             </CardBody>
           </Card>
         )}
