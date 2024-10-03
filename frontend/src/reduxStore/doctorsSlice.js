@@ -5,6 +5,7 @@ const doctorSlice=createSlice({
     initialState:{
         doctors:[],
         singleDoctor:null,
+        doctorAppointments:[]
     },
     reducers:{
         setDoctors:(state,action)=>{
@@ -12,9 +13,12 @@ const doctorSlice=createSlice({
         } ,
         setSingleDoctor:(state,action)=>{
             state.singleDoctor=action.payload
+        },
+        setDoctorAppointments:(state,action)=>{
+            state.doctorAppointments=action.payload
         }
     }
 })
 
 export default doctorSlice.reducer
-export const {setDoctors,setSingleDoctor}=doctorSlice.actions
+export const {setDoctors,setSingleDoctor,setDoctorAppointments}=doctorSlice.actions

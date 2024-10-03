@@ -4,7 +4,8 @@ const appointmentsSlice=createSlice({
     name:"appointments",
     initialState:{
         appointments: [],
-        singleAppointment:null
+        singleAppointment:null,
+        doctorAppointments:[]
     },
 reducers:{
     setAppointments:(state,action)=>{
@@ -12,6 +13,9 @@ reducers:{
     },
     setSingleAppointment:(state,action)=>{
         state.singleAppointment = action.payload
+    },
+    setDoctorAppointments:(state,action)=>{
+        state.doctorAppointments = action.payload
     }
 }
 })

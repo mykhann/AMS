@@ -5,8 +5,9 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxStore/authSlice";
 import { toast } from "react-toastify";
+import { setSingleDoctor } from "../../reduxStore/doctorsSlice";
 
-const Login = () => {
+const DoctorLogin = () => {
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const [input, setInput] = useState({
@@ -20,11 +21,12 @@ const Login = () => {
   const submitHandler =async (e) => {
     e.preventDefault()
    try {
-    const res=await axios.post("http://localhost:8000/api/v1/users/login",input,{withCredentials:true})
+    const res=await axios.post("http://localhost:8000/api/v1/doctors/doctor-login",input,{withCredentials:true})
     if (res.data.success){
       toast.success(res.data.message)
-      navigate("/")
-      dispatch(setUser(res.data.user))
+      navigate("/doctor/appointments")
+      dispatch(setSingleDoctor(res.data.doctor))
+      
       
     }
    } catch (error) {
@@ -73,24 +75,16 @@ const Login = () => {
             </button>
           </form>
           <div className="flex justify-center mt-3">
-            <Link to="/signup">
-              <p className="font-medium cursor-pointer text-gray-900 hover:text-red-600">
-                CREATE ACCOUNT
+            <Link to="/login">
+              <p className="font-medium cursor-pointer text-gray-900 ">
+               <span className="text-blue-900">Login</span> as a user
               </p>
             </Link>
-          
           </div>
-
-          
-              <p className="font-medium cursor-pointer text-gray-900 ">
-               <Link to="/doctor/login"><span className="text-blue-900">Login</span></Link> as a doctor
-              </p>
-          
-          
         </div>
       </div>
     </>
   );
 };
 
-export default Login;
+export default DoctorLogin;

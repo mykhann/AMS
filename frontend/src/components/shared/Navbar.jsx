@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, User, SpaceIcon } from "lucide-react";
+import { Menu, X, User,  } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const Navbar = () => {
     <nav className="relative bg-black text-white p-4 shadow-md ">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link to="/">
+        <Link to="/doctor/appointments">
 
           <div className="text-2xl font-bold tracking-wider">HealthCare</div>
         </Link>
@@ -27,10 +27,10 @@ const Navbar = () => {
         {/* Links for larger screens */}
         <div className="hidden md:flex space-x-6">
           <Link to="/doctors" className="hover:text-gray-300">
-            Doctors
+            DOCTORS
           </Link>
           <Link to="/about" className="hover:text-gray-300">
-            About Us
+             ABOUT
           </Link>
         </div>
         {user ? (

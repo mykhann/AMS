@@ -12,6 +12,7 @@ import { setDoctors } from "../../reduxStore/doctorsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../shared/Navbar";
 import { useNavigate } from "react-router-dom";
+import { Verified } from "lucide-react";
 
 const DoctorsList = () => {
   const dispatch = useDispatch();
@@ -61,18 +62,20 @@ const DoctorsList = () => {
               </CardHeader>
               <CardBody>
                 <Typography variant="h4" color="blue-gray">
-                  {doctor.name}
+                 <div className="flex"> {doctor.name.toUpperCase()} <Verified className="mt-1 ml-3"/></div>
                 </Typography>
+                <Typography variant="p" color="blue-gray">
+                  {doctor.specialization}
+                </Typography>
+              
                 <Typography
                   variant="lead"
                   color="gray"
                   className="mt-3 font-normal"
                 >
-                  {`${doctor.experience} years experience`}
+                  Appointment Fee : <span className="font-bold text-green-800">{`${doctor.fees} $ `}</span>
                 </Typography>
-                <Typography variant="h4" color="blue-gray">
-                  {doctor.specialization}
-                </Typography>
+                
               </CardBody>
 
               <Button onClick={() => navigate(`/appointment/${doctor._id}`)}>

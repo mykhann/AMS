@@ -18,14 +18,14 @@ const AppointmentHistory = () => {
   return (
     
     <div className="grid mt-9 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-      {appointments.map((appointment) => (
+      {appointments?.map((appointment) => (
         <div
           key={appointment._id}
           className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center transition-transform transform hover:scale-105"
         >
           <img
-            src={appointment.doctor.avatar}
-            alt={`Dr. ${appointment.doctor.name}`}
+            src={appointment?.doctor.avatar}
+            alt={`Dr. ${appointment?.doctor.name}`}
             className="w-24 h-24 rounded-full mb-4"
           />
           <h2 className="text-xl font-semibold mb-2">{`Dr. ${appointment.doctor.name}`}</h2>

@@ -1,0 +1,122 @@
+import React, { useState } from 'react';
+import { Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from '@material-tailwind/react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import useFetchAllDoctors from '../../customHooks/useFetchAllDoctors';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import useFetchDoctorById from '../../customHooks/useFetchDoctorById';
+import { setDoctors } from '../../reduxStore/doctorsSlice';
+
+const DoctorTableUI = () => {
+  const [showMore, setShowMore] = useState(null);
+  useFetchAllDoctors()
+  
+ const {doctors}=useSelector(store=>store.doctors)
+ const dispatch=useDispatch()
+ 
+  const toggleMore = (index) => {
+    setShowMore(showMore === index ? null : index);
+  };
+
+  const handleDelete=async(doctorId)=>{
+    try {
+        const res=await axios.delete(`http://localhost:8000/api/v1/doctors/delete/${doctorId}`,{withCredentials:true});
+        if (res.data.success){
+            toast.success(res.data.message);
+            dispatch(setDoctors(doctors.filter(doctor => doctor._id !== doctorId)));
+          
+
+        }
+        
+    } catch (error) {
+        toast.error(errr.response.data.message)
+        
+    }
+
+
+  }
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen bg-gradient-to-r from-blue-900 to-blue-400 flex justify-center">
+      <div className="container p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+        <Button onClick={() => navigate(-1)}>Back</Button>
+        <div className="overflow-x-auto mt-9">
+          <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
+            <thead className="bg-white">
+              <tr>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Image</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Name</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Specialization</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 hidden md:table-cell">Contact</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+             {
+                doctors.map((doctor,index)=>(
+                    <React.Fragment key={index}>
+                    <tr className="border-t hover:bg-blue-50 transition-colors">
+                      <td className="px-6 py-4">
+                        <img
+                          className="w-16 h-16 rounded-full object-cover" // Adjusted size from w-12 h-12 to w-16 h-16
+                          src={doctor.avatar}
+                          alt={doctor.name}
+                        />
+                      </td>
+  
+                      <td className="px-6 py-4">
+                        {doctor.name}
+                        <button
+                          className="ml-4 text-blue-500 hover:text-blue-600 md:hidden flex items-center"
+                          onClick={() => toggleMore(index)}
+                        >
+                          {showMore === index ? (
+                            <>
+                              Show Less <ChevronUp className="ml-1 w-4 h-4" />
+                            </>
+                          ) : (
+                            <>
+                              More <ChevronDown className="ml-1 w-4 h-4" />
+                            </>
+                          )}
+                        </button>
+                      </td>
+  
+                      <td className="px-6 py-4 hidden md:table-cell">{doctor.specialization}</td>
+                      <td className="px-6 py-4 hidden md:table-cell">{doctor.email}</td>
+  
+                      <td className="px-6 py-4 flex items-center space-x-4">
+                        <button onClick={()=>handleDelete(doctor._id)} className="flex items-center text-red-500 mt-4 hover:text-red-600">
+                          <Trash2 className="w-5 h-5    mr-1" />
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+  
+                    {showMore === index && (
+                      <tr className=" md:hidden">
+                        <td colSpan={2} className="px-6 py-4">
+                          <p><strong>Specialization:</strong> {doctor.specialization}</p>
+                          <p><strong>Contact:</strong> {doctor.email}</p>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+
+
+                ))
+             }
+               
+         
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DoctorTableUI;
