@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFetchAllDoctors from '../../customHooks/useFetchAllDoctors';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import useFetchDoctorById from '../../customHooks/useFetchDoctorById';
+
 import { setDoctors } from '../../reduxStore/doctorsSlice';
 
 const DoctorTableUI = () => {
   const [showMore, setShowMore] = useState(null);
   useFetchAllDoctors()
   
- const {doctors}=useSelector(store=>store.doctors)
+ const {doctors=[]}=useSelector(store=>store.doctors)
  const dispatch=useDispatch()
  
   const toggleMore = (index) => {
@@ -31,7 +31,7 @@ const DoctorTableUI = () => {
         }
         
     } catch (error) {
-        toast.error(errr.response.data.message)
+        toast.error(error.response.data.message)
         
     }
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useFetchAllAppointments from "../../customHooks/useFetchAllAppointments";
 
 const AppointmentHistory = () => {
-  const { appointments } = useSelector((store) => store.appointments);
+  const { appointments=[] } = useSelector((store) => store.appointments);
 
   useFetchAllAppointments();
 
