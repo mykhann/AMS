@@ -1,19 +1,18 @@
 import { Doctor } from "../models/doctor.model.js";
-import { Hospital } from "../models/hospital.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 // admin will create Doctor 
 
 const createDoctor = asyncHandler(async (req, res) => {
 
-   
-    // toDo : add appointments 
 
-    const { name, experience, specialization, availability, fees, email, hospital } = req.body;
+    const { name, experience, specialization,description, fees, email,password } = req.body;
 
  
-    if (!name || !experience || !specialization || !availability || !fees || !email || !hospital) {
+    if (!name || !experience || !specialization  || !fees || !email  || !password || !description) {
         return res.status(404).json({
             success: false,
             message: "please enter all fields",
@@ -30,22 +29,65 @@ const createDoctor = asyncHandler(async (req, res) => {
     if (!req.file) {
         return res.status(404).json({ success: false, message: "please upload avatar for doctor" });
     }
+    const hashedPass=await bcrypt.hash(password,10)
     const avatarResponse = await uploadOnCloudinary(req.file.buffer, req.file.originalName)
 
 
     const doctor = await Doctor.create({
         name,
         email,
+        password: hashedPass,
         specialization,
         experience,
         avatar: avatarResponse.secure_url,
-        availability,
+        description,
         fees,
-        hospital
+        
     })
     res.status(200).json({ success: true, doctor, message: "doctor created successfully" });
 
 });
+
+const LoginDoctor = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(401).json({ success: false, message: "please enter your email and password" });
+    }
+
+    let doctor = await Doctor.findOne({ email });
+    if (!doctor) {
+        return res.status(401).json({ success: false, message: "no doctor regsitered with this email" });
+    }
+    const comparingPassword = await bcrypt.compare(password, doctor.password)
+    if (!comparingPassword) {
+        return res.status(401).json({ success: false, message: "please enter correct password" });
+    }
+    const doctorData = { doctorId: doctor._id }
+    const token = jwt.sign(doctorData, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+    });
+
+    doctor = {
+        name: doctor.name,
+        email: doctor.email,
+        avatar: doctor.avatar,
+        specialization:doctor.specialization,
+        experience:doctor.experience,
+        availability:doctor.availability,
+        fees:doctor.fees
+    }
+
+    const cookieOptions = {
+        secure: true,
+        httpOnly: true
+    }
+    res.status(200).cookie("token", token, cookieOptions).json({
+        success: true,
+        message: "welcome back",
+        doctor,
+        token
+    })
+})
 
 //admin will Delete a doctor 
 
@@ -110,5 +152,6 @@ export {
     deleteDoctor,
     getDoctoryById,
     updateDoctor,
-    getAllDoctors
+    getAllDoctors,
+    LoginDoctor
 }

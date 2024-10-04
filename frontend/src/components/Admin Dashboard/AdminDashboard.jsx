@@ -65,12 +65,12 @@ const AdminDashboard = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Latest Doctors Table */}
-            <LatestDoctors />
 
             {/* Latest Appointments Table */}
             <LatestAppointments />
+            <LatestDoctors />
           </div>
         </div>
       </div>

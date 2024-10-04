@@ -31,7 +31,7 @@ const ProfilePage = () => {
               <img
                 src={user.avatar || "https://via.placeholder.com/150"}
                 alt="Profile"
-                className="w-32 h-32 rounded-full object-cover shadow-md lg:w-48 lg:h-48"
+                className="w-32 h-32 rounded-full object-cover object-top shadow-md lg:w-48 lg:h-48"
               />
             </div>
 

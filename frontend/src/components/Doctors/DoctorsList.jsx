@@ -57,7 +57,7 @@ const DoctorsList = () => {
                 <img
                   src={doctor.avatar}
                   alt="Doctor Avatar"
-                  className="w-60 h-60 object-cover mx-auto"
+                  className="w-60 h-60 object-cover object-top mx-auto"
                 />
               </CardHeader>
               <CardBody>

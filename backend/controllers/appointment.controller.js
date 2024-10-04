@@ -6,7 +6,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 const registerAppointment = asyncHandler(async(req,res)=>{
 
     
-    const {date,time,doctorId,reason}=req.body;
+    const {date,time,reason}=req.body;
+    const doctorId=req.params.id
     const userId=req.user._id;
     if (!doctorId || !time || !date ||!reason){
         return res.status(404).json({
@@ -14,7 +15,7 @@ const registerAppointment = asyncHandler(async(req,res)=>{
             message:"please enter all fields"
         });
     };
-    const doctor=await Doctor.findById(doctorId).populate("appointment");
+    const doctor=await Doctor.findById(doctorId).populate("appointments");
     if (!doctor){
         return res.status(404).json({success: false, message:"no doctor found"});
     }
@@ -49,7 +50,7 @@ res.status(200).json({success: true, appointment})
 // get all appointments ==>   USER APPOINTMENT HISTORY
 const getAppointments=asyncHandler(async(req,res)=>{
     const userId=req.user._id;
-    const appointments=await Appointment.find({patient:userId}).sort({createdAt:-1}).populate("doctor")
+    const appointments=await Appointment.find({patient:userId}).sort({createdAt:-1}).populate("doctor").populate("patient")
     if (!appointments){
         return res.status(404).json({success: false,
             message:"no appointments found"})
@@ -107,7 +108,7 @@ const getAppointmentById=asyncHandler(async(req,res)=>{
 
 
 const getDoctorAppointments=asyncHandler(async(req,res)=>{
-    const doctorId=req.params.id;
+    const doctorId=req.user._id;
     const appointments=await Appointment.find({doctor:doctorId}).populate("patient")
     if (!appointments){
         return res.status(404).json({
@@ -123,6 +124,19 @@ const getDoctorAppointments=asyncHandler(async(req,res)=>{
 })
 
 
+// Admin 
+
+// Admin will get all appointments 
 
 
-export {registerAppointment,getAppointments,updateAppointment,cancelAppointment,getAppointmentById,getDoctorAppointments}
+const getAllAppointments =asyncHandler(async(req,res)=>{
+    const appointments=await Appointment.find().populate("doctor").populate("patient")
+    res.status(200).json({
+        success: true,
+        appointments})
+})
+
+
+
+
+export {registerAppointment,getAppointments,updateAppointment,cancelAppointment,getAppointmentById,getDoctorAppointments,getAllAppointments}

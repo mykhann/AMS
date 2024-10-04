@@ -22,6 +22,7 @@ import AdminDashboard from "./components/Admin Dashboard/AdminDashboard";
 import DoctorTableUI from "./components/Admin Dashboard/DoctorTableUI";
 import AddDoctor from "./components/Admin Dashboard/AddDoctor";
 import AdminAppointments from "./components/Admin Dashboard/AdminAppointments";
+import DoctorInfo from "./components/Admin Dashboard/DoctorInfo";
 
 
 const router = createBrowserRouter([
@@ -106,7 +107,12 @@ const router = createBrowserRouter([
     path:"/admin/view-appointments",
     element:<AdminAppointments/>
 
-  }
+  },
+  {
+    path:"/admin/doctor-info/:id",
+    element:<DoctorInfo/>
+
+  },
 
 ]);
 
