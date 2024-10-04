@@ -21,6 +21,7 @@ import UpdateAppointment from "./components/Doctor's Dashboard/UpdateAppointment
 import AdminDashboard from "./components/Admin Dashboard/AdminDashboard";
 import DoctorTableUI from "./components/Admin Dashboard/DoctorTableUI";
 import AddDoctor from "./components/Admin Dashboard/AddDoctor";
+import AdminAppointments from "./components/Admin Dashboard/AdminAppointments";
 
 
 const router = createBrowserRouter([
@@ -99,6 +100,11 @@ const router = createBrowserRouter([
   {
     path:"/admin/add-doctor",
     element:<AddDoctor/>
+
+  },
+  {
+    path:"/admin/view-appointments",
+    element:<AdminAppointments/>
 
   }
 
