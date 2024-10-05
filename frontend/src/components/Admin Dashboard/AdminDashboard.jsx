@@ -2,13 +2,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { FaUserDoctor, FaUsersViewfinder } from "react-icons/fa6";
-import { FaSignOutAlt } from "react-icons/fa"; // Import the logout icon
+import { FaSignOutAlt } from "react-icons/fa"; 
 import LatestDoctors from "./LatestDoctors";
 import LatestAppointments from "./LatestAppointments";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../reduxStore/authSlice";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
-  const handleLogout = () => {
-    console.log("Logging out...");
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post("http://localhost:8000/api/v1/users/logout");
+      if (res.data.success) {
+        dispatch(setUser(null));
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -22,7 +36,6 @@ const AdminDashboard = () => {
           className="flex items-center bg-red-600 text-white mr-4 px-4 h-10 py-2 rounded-lg hover:bg-red-700 transition duration-300"
         >
           <FaSignOutAlt className="mr-2 w-6 h-6" />
-          
         </button>
       </div>
 

@@ -38,9 +38,7 @@ const DoctorsList = () => {
     <>
       <Navbar />
       <div className="py-12 ">
-        <h1 className="text-center text-4xl font-bold text-gray-900 mb-8">
-          Our Doctors
-        </h1>
+       
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
           {doctors.map((doctor, index) => (
@@ -68,17 +66,18 @@ const DoctorsList = () => {
                   {doctor.specialization}
                 </Typography>
               
+              
                 <Typography
                   variant="lead"
                   color="gray"
-                  className="mt-3 font-normal"
+                  className="mt-1 font-normal"
                 >
                   Appointment Fee : <span className="font-bold text-green-800">{`${doctor.fees} $ `}</span>
                 </Typography>
                 
               </CardBody>
 
-              <Button onClick={() => navigate(`/appointment/${doctor._id}`)}>
+              <Button onClick={() => navigate(`/appointment/${doctor._id}`)} className="bg-blue-800 hover:bg-blue-900">
                 Book Appointment
               </Button>
             </Card>

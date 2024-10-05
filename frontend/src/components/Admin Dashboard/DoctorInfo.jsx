@@ -2,8 +2,11 @@ import React from "react";
 import useFetchDoctorById from "../../customHooks/useFetchDoctorById";
 import { useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
+import { Button } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 const DoctorInfo = () => {
+  const navigate = useNavigate();
   useFetchDoctorById();
   const { singleDoctor } = useSelector((store) => store.doctors);
 
@@ -12,8 +15,10 @@ const DoctorInfo = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-blue-900 to-gray-900 min-h-screen flex items-center justify-center">
-      <div className="grid grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-lg p-6 mb-4 gap-4 w-full max-w-4xl h-96"> 
+    <div className="bg-gradient-to-r from-blue-900 to-gray-900 min-h-screen flex items-center justify-center flex-col">
+      <Button className="mb-4 self-start ml-80" onClick={() => navigate(-1)}>Back</Button>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 bg-white rounded-lg shadow-lg p-6 mb-4 gap-4 w-full max-w-4xl"> 
         {/* Doctor Image */}
         <img
           src={singleDoctor.avatar}
@@ -30,11 +35,6 @@ const DoctorInfo = () => {
             Specialization: {singleDoctor?.specialization}
           </p>
           <p className="text-gray-700 mt-2">{singleDoctor?.description}</p>
-          <div className="mt-4">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">
-              Contact
-            </button>
-          </div>
         </div>
       </div>
     </div>

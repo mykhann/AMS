@@ -14,9 +14,10 @@ const DoctorTableUI = () => {
 
   const { doctors = [] } = useSelector((store) => store.doctors);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleMore = (index) => {
-    setShowMore(showMore === index ? null : index);
+    setShowMore((prev) => (prev === index ? null : index));
   };
 
   const handleDelete = async (doctorId) => {
@@ -27,16 +28,15 @@ const DoctorTableUI = () => {
         dispatch(setDoctors(doctors.filter((doctor) => doctor._id !== doctorId)));
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-900 to-blue-400 flex justify-center">
       <div className="container p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
         <Button onClick={() => navigate(-1)}>Back</Button>
+        <Button onClick={() => navigate("/admin/add-doctor") } className='ml-4'>Add a Doctor</Button>
         <div className="overflow-x-auto mt-9">
           <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
             <thead className="bg-white">
@@ -49,63 +49,58 @@ const DoctorTableUI = () => {
               </tr>
             </thead>
             <tbody>
-              {
-                doctors.map((doctor, index) => (
-                  <React.Fragment key={index}>
-                    <tr className="border-t hover:bg-blue-50 transition-colors cursor-pointer">
-                      <td className="px-6 py-4">
-                        <img
-                          className="w-16 h-16 rounded-full object-cover object-top"
-                          src={doctor.avatar}
-                          alt={doctor.name}
-                        />
-                      </td>
-                    
-                      <td className="px-6 py-4">
-                        <Link to={`/admin/doctor-info/${doctor._id}`} className="flex items-center">
-                          {doctor.name}
-                          <button
-                            className="ml-4 text-blue-500 hover:text-blue-600 md:hidden flex items-center"
-                            onClick={(e) => {
-                              e.stopPropagation(); 
-                              toggleMore(index);
-                            }}
-                          >
-                            {showMore === index ? (
-                              <>
-                                Show Less <ChevronUp className="ml-1 w-4 h-4" />
-                              </>
-                            ) : (
-                              <>
-                                More <ChevronDown className="ml-1 w-4 h-4" />
-                              </>
-                            )}
-                          </button>
-                        </Link>
-                      </td>
-
-                      <td className="px-6 py-4 hidden md:table-cell">{doctor.specialization}</td>
-                      <td className="px-6 py-4 hidden md:table-cell">{doctor.email}</td>
-
-                      <td className="px-6 py-4 flex items-center space-x-4">
-                        <button onClick={() => handleDelete(doctor._id)} className="flex items-center text-red-500 mt-4 hover:text-red-600">
-                          <Trash2 className="w-5 h-5 mr-1" />
-                          Delete
+              {doctors.map((doctor, index) => (
+                <React.Fragment key={doctor._id}>
+                  <tr className="border-t hover:bg-blue-50 transition-colors cursor-pointer">
+                    <td className="px-6 py-4">
+                      <img className="w-16 h-16 rounded-full object-cover object-top" src={doctor.avatar} alt={doctor.name} />
+                    </td>
+                    <td className="px-6 py-4">
+                      <Link to={`/admin/doctor-info/${doctor._id}`} className="flex items-center">
+                        {doctor.name}
+                        <button
+                          aria-label="Toggle more information"
+                          className="ml-4 text-blue-500 hover:text-blue-600 md:hidden flex items-center"
+                          onClick={(e) => {
+                            e.stopPropagation(); 
+                            toggleMore(index);
+                          }}
+                        >
+                          {showMore === index ? (
+                            <>
+                              Show Less <ChevronUp className="ml-1 w-4 h-4" />
+                            </>
+                          ) : (
+                            <>
+                              More <ChevronDown className="ml-1 w-4 h-4" />
+                            </>
+                          )}
                         </button>
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4 hidden md:table-cell">{doctor.specialization}</td>
+                    <td className="px-6 py-4 hidden md:table-cell">{doctor.email}</td>
+                    <td className="px-6 py-4 flex items-center space-x-4">
+                      <button
+                        onClick={() => handleDelete(doctor._id)}
+                        className="flex items-center text-red-500 mt-4 hover:text-red-600"
+                        aria-label="Delete doctor"
+                      >
+                        <Trash2 className="w-5 h-5 mr-1" />
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                  {showMore === index && (
+                    <tr className="md:hidden">
+                      <td colSpan={2} className="px-6 py-4">
+                        <p><strong>Specialization:</strong> {doctor.specialization}</p>
+                        <p><strong>Contact:</strong> {doctor.email}</p>
                       </td>
                     </tr>
-
-                    {showMore === index && (
-                      <tr className="md:hidden">
-                        <td colSpan={2} className="px-6 py-4">
-                          <p><strong>Specialization:</strong> {doctor.specialization}</p>
-                          <p><strong>Contact:</strong> {doctor.email}</p>
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
-                ))
-              }
+                  )}
+                </React.Fragment>
+              ))}
             </tbody>
           </table>
         </div>

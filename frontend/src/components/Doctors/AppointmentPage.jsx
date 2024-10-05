@@ -16,7 +16,7 @@ const AppointmentPage = () => {
   const { user } = useSelector((store) => store.auth);
   const params = useParams();
   const doctorId = params.id;
-  const singleDoctor = useSelector((store) => store.doctors.singleDoctor); // Fixed destructuring
+  const singleDoctor = useSelector((store) => store.doctors.singleDoctor);
   const [input, setInput] = useState({
     date: "",
     time: "",
@@ -44,17 +44,17 @@ const AppointmentPage = () => {
         navigate(-1);
       }
     } catch (error) {
-      toast.error(error.response?.data.message || "An error occurred"); // Added a fallback message
+      toast.error(error.response?.data.message || "An error occurred");
     }
   };
 
-  useFetchDoctorById(); 
+  useFetchDoctorById();
 
   if (!singleDoctor) {
     return (
       <div className="flex items-center justify-center min-h-screen p-4">
         <h1 className="text-2xl font-bold text-gray-800">
-          <Loader2 className="animate-spin w-10 h-14"/>
+          <Loader2 className="animate-spin w-10 h-14" />
         </h1>
       </div>
     );
@@ -63,26 +63,29 @@ const AppointmentPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <h1 className="mb-6 text-4xl font-bold text-gray-800">
-          {singleDoctor.name}'s Appointment
+      <div className="min-h-screen flex flex-col items-center justify-start pt-8"> 
+        <h1 className="mb-6 text-4xl font-bold text-black text-center">
+          Book an appointment with <span className="text-red-800">{singleDoctor.name}</span>
         </h1>
 
         <div className="flex flex-col md:flex-row w-full max-w-5xl space-x-0 md:space-x-4">
-          <div className="w-full max-w-md md:mr-4">
+          {/* Doctor Card */}
+          <div className="w-full max-w-md p-6 md:mr-6 bg-white rounded-lg ">
             <SingleDoctorCard />
           </div>
 
+          {/* Vertical Divider */}
           <div className="hidden md:block w-px bg-gray-300 mx-4"></div>
 
+          {/* Appointment Form */}
           <form
             onSubmit={submitHandler}
-            className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg space-y-4 md:mb-0 mb-4"
+            className="w-full max-w-md p-6 rounded-lg space-y-4"
           >
             <div>
               <label
                 htmlFor="date"
-                className="block mb-2 text-sm font-medium text-gray-700"
+                className="block mb-1 text-sm font-medium text-black"
               >
                 Select Date
               </label>
@@ -100,7 +103,7 @@ const AppointmentPage = () => {
             <div>
               <label
                 htmlFor="time"
-                className="block mb-2 text-sm font-medium text-gray-700"
+                className="block mb-1 text-sm font-medium text-black"
               >
                 Select Time
               </label>
@@ -118,7 +121,7 @@ const AppointmentPage = () => {
             <div>
               <label
                 htmlFor="reason"
-                className="block mb-2 text-sm font-medium text-gray-700"
+                className="block mb-1 text-sm font-medium text-black"
               >
                 Reason for Appointment
               </label>
@@ -136,7 +139,7 @@ const AppointmentPage = () => {
             {user ? (
               <Button
                 type="submit"
-                className="w-full py-4 px-4 text-white font-semibold rounded-md transition"
+                className="w-full py-4 px-4 bg-blue-900 text-white font-semibold rounded-md transition"
               >
                 Book an appointment
               </Button>
@@ -144,15 +147,15 @@ const AppointmentPage = () => {
               <div>
                 <Button
                   type="submit"
-                  className="w-full py-4 px-4 text-white font-semibold rounded-md transition"
+                  className="w-full py-4 px-4 bg-blue-500 text-white font-semibold rounded-md transition"
                   disabled={true}
                 >
                   Book an appointment
                 </Button>
-                <h1>
+                <h1 className="text-black mt-4">
                   <Link to="/login">
-                    <span className="font-bold text-blue-500">Login</span>
-                  </Link>{" "}
+                    <span className="font-bold text-blue-500">Login </span>
+                  </Link>
                   to book an appointment
                 </h1>
               </div>
@@ -165,4 +168,3 @@ const AppointmentPage = () => {
 };
 
 export default AppointmentPage;
-  

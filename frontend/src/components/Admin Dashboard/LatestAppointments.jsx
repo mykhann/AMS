@@ -1,12 +1,13 @@
 import React from 'react';
 import useFetchAdminAppointments from '../../customHooks/useFetchAdminAppointments';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const LatestAppointments = () => {
   useFetchAdminAppointments();
   const { appointmentsAdmin = [] } = useSelector((store) => store.appointments);
   const filteredAppointments = [...appointmentsAdmin].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  const latestDoctors = filteredAppointments.slice(0, 3);
+  const latestAppointments = filteredAppointments.slice(0, 3);
 
   return (
     <div className="bg-blue-400 text-blue-900 p-6 rounded-lg w-full shadow-lg">
@@ -15,33 +16,53 @@ const LatestAppointments = () => {
         <table className="min-w-full rounded-lg shadow-lg">
           <thead>
             <tr>
-              <th className="py-2 px-4 ">Patients</th> 
-              <th className="py-2 px-4 ">Doctors</th>  
+              <th className="py-2 px-4">Patients</th>
+              <th className="py-2 px-4">Doctors</th>
             </tr>
           </thead>
           <tbody>
-            {latestDoctors.map((appointment) => (
-              <tr key={appointment.id} className="">
+            {latestAppointments.map((appointment) => (
+              <tr 
+                key={appointment.id} 
+                className="hover:bg-blue-300 transition-colors cursor-pointer"
+              >
                 {/* Patient Column */}
-                <td className="py-2 px-6 text-left"> {/* Aligned to the left */}
+                <td className="py-2 px-6 text-left">
                   <div className="flex items-center justify-start space-x-4">
-                    <img
-                      src={appointment.patient.avatar}
-                      alt={appointment.patient.name}
-                      className="w-20 h-20 rounded-full object-cover object-top"
-                    />
-                    <span className="text-left">{appointment.patient.name}</span>
+                    {appointment.patient ? (
+                      <>
+                        <img
+                          src={appointment.patient.avatar}
+                          alt={appointment.patient.name}
+                          className="w-20 h-20 rounded-full object-cover object-top"
+                        />
+                        <span className="text-left">{appointment.patient.name}</span>
+                      </>
+                    ) : (
+                      <span className="text-left text-red-500">No Patient Info</span>
+                    )}
                   </div>
                 </td>
                 {/* Doctor Column */}
-                <td className="py-2 px-6 text-left"> {/* Aligned to the left */}
-                  <div className="flex items-center ml-16 space-x-4">
-                    <img
-                      src={appointment.doctor.avatar}
-                      alt={appointment.doctor.name}
-                      className="w-20 h-20 rounded-full object-cover object-top"
-                    />
-                    <span className="text-left">{appointment.doctor.name}</span>
+                <td className="py-2 px-6 text-left">
+                  <div className="flex items-center space-x-4">
+                    {appointment.doctor ? (
+                      <>
+                        <img
+                          src={appointment.doctor.avatar}
+                          alt={appointment.doctor.name}
+                          className="w-20 h-20 rounded-full object-cover object-top"
+                        />
+                        <Link 
+                          to={`/admin/doctor-info/${appointment.doctor._id}`} 
+                          className="text-blue-900 font-semibold hover:underline"
+                        >
+                          {appointment.doctor.name}
+                        </Link>
+                      </>
+                    ) : (
+                      <span className="text-left text-red-500">No Doctor Info</span>
+                    )}
                   </div>
                 </td>
               </tr>

@@ -25,24 +25,24 @@ const AppointmentHistory = () => {
           >
             <div className="flex items-center mb-1">
               <img
-                src={appointment?.doctor.avatar}
+                src={appointment?.doctor?.avatar}
                 alt={`Dr. ${appointment?.doctor.name}`}
                 className="w-20 h-20 rounded-full mb-32 mr-4"
               />
               <div className="flex flex-col">
-                <h2 className="text-lg font-semibold mb-4">{`Dr. ${appointment.doctor.name}`}</h2>
+                <h2 className="text-lg font-semibold mb-4">{`Dr. ${appointment?.doctor.name}`}</h2>
                 <p className="text-gray-700 text-sm ">
                   <strong>Date:</strong>{" "}
-                  {new Date(appointment.date).toLocaleDateString()}
+                  {new Date(appointment?.date).toLocaleDateString()}
                 </p>
                 <p className="text-gray-700 text-sm mb-1">
-                  <strong>Time:</strong> {appointment.time}
+                  <strong>Time:</strong> {appointment?.time}
                 </p>
                 <p className="text-gray-700 text-sm mb-1">
                   <strong>Status:</strong>{" "}
                   <span
                     className={`font-semibold ${
-                      appointment.status === "completed"
+                      appointment?.status === "completed"
                         ? "text-green-500"
                         : "text-red-500"
                     }`}
@@ -51,7 +51,7 @@ const AppointmentHistory = () => {
                   </span>
                 </p>
                 <p className="text-gray-700 text-sm mb-1">
-                  <strong>Reason:</strong> {appointment.reason}
+                  <strong>Reason:</strong> {appointment?.reason}
                 </p>
               </div>
             </div>
