@@ -7,7 +7,7 @@ const router= new Router();
 // USER ROUTES 
 router.route("/register-appointment/:id").post(isAuthenticated,registerAppointment)
 router.route("/get").get(isAuthenticated,getAppointments)
-router.route("/update/:id").patch(isAuthenticated,updateAppointment)
+router.route("/update/:id").patch(updateAppointment)
 router.route("/cancel/:id").patch(isAuthenticated,cancelAppointment)
 
 // Doctor 

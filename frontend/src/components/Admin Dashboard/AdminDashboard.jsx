@@ -1,28 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { FaUserDoctor, FaUsersViewfinder } from "react-icons/fa6";
 import { FaSignOutAlt } from "react-icons/fa"; 
 import LatestDoctors from "./LatestDoctors";
 import LatestAppointments from "./LatestAppointments";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxStore/authSlice";
 import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    try {
-      const res = await axios.post("http://localhost:8000/api/v1/users/logout");
-      if (res.data.success) {
-        dispatch(setUser(null));
-        toast.success(res.data.message);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+   dispatch(setUser(null));
+   navigate("/login")
+   toast.success("Logged out successfully")
   };
 
   return (

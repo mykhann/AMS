@@ -35,7 +35,6 @@ const router = createBrowserRouter([
   { path: "/appointment/:id", element: <AppointmentPage /> },
   { path: "/about", element: <AboutPage /> },
 
-
   // Doctor profile
   { path: "/doctor/dashboard", element: <Dashboard /> },
   { path: "/doctor/view-appointments", element: <DoctorAppointments /> },
@@ -56,7 +55,7 @@ function App() {
     <Provider store={store}>
       <NextUIProvider>
         <RouterProvider router={router} />
-        <ToastContainer />
+        <ToastContainer position="bottom-right" autoClose={700} pauseOnHover />
       </NextUIProvider>
     </Provider>
   );

@@ -48,16 +48,16 @@ const register = asyncHandler(async (req, res) => {
 const Login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        return res.status(401).json({ success: false, message: "please enter your email and password" });
+        return res.status(401).json({ success: false, message: "Plese enter all fields" });
     }
 
     let user = await User.findOne({ email });
     if (!user) {
-        return res.status(401).json({ success: false, message: "no user regsitered with this email" });
+        return res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
     const comparingPassword = await bcrypt.compare(password, user.password)
     if (!comparingPassword) {
-        return res.status(401).json({ success: false, message: "please enter correct password" });
+        return res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
     const userData = { userId: user._id }
     const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, {
@@ -78,7 +78,7 @@ const Login = asyncHandler(async (req, res) => {
     }
     res.status(200).cookie("token", token, cookieOptions).json({
         success: true,
-        message: "welcome back",
+        message: `Welcome back ${user.name}`,
         user,
         token
     })

@@ -1,20 +1,35 @@
 import { useState } from "react";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"; 
 import { Button } from "@material-tailwind/react";
+import { FaSignOutAlt } from "react-icons/fa";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { setUser } from "../../reduxStore/authSlice";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch(); 
   const { user } = useSelector((store) => store.auth);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+  dispatch(setUser(null));
+  navigate("/login")
+  toast.success("Logged out successfully")
+ 
+    
+ 
+  };
+
   return (
-    <nav className="relative bg-gradient-to-r from-blue-800 via-red-800 to-purple-900 text-white p-4 shadow-md">
+    <nav className="relative bg-blue-900 text-white p-4 shadow-md ">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/">
@@ -36,17 +51,24 @@ const Navbar = () => {
             ABOUT
           </Link>
         </div>
+
         {user ? (
           <div className="flex items-center space-x-4">
             <User
               onClick={() => navigate("/profile")}
               className="h-6 w-6 cursor-pointer hover:text-gray-300 transition duration-300"
             />
+            <button
+              onClick={handleLogout}
+              className="flex items-center  bg-red-600 text-white mr-4 px-4 h-8 py-2 rounded-lg hover:bg-red-700 transition duration-300"
+            >
+              <FaSignOutAlt className="w-8 h-8"/>
+            </button>
           </div>
         ) : (
           <Button
             onClick={() => navigate("/login")}
-            className="cursor-pointer bg-red-800 hover:bg-red-900 transition duration-300"
+            className="cursor-pointer bg-blue-800 hover:bg-blue-900 transition duration-300"
           >
             Login
           </Button>
@@ -77,7 +99,16 @@ const Navbar = () => {
           </Link>
           {user ? (
             <div className="flex items-center space-x-4">
-              <User className="h-6 w-6 cursor-pointer hover:text-gray-300 transition duration-300" />
+              <User
+                onClick={() => navigate("/profile")}
+                className="h-6 w-6 cursor-pointer hover:text-gray-300 transition duration-300"
+              />
+              <button
+                onClick={handleLogout}
+                className="hover:text-gray-300 transition duration-300"
+              >
+                Logout
+              </button>
             </div>
           ) : (
             <Button

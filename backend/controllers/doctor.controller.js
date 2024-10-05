@@ -9,10 +9,10 @@ import jwt from "jsonwebtoken"
 const createDoctor = asyncHandler(async (req, res) => {
 
 
-    const { name, experience, specialization,description, fees, email,password } = req.body;
+    const { name, experience, specialization, description, fees, email, password } = req.body;
 
- 
-    if (!name || !experience || !specialization  || !fees || !email  || !password || !description) {
+
+    if (!name || !experience || !specialization || !fees || !email || !password || !description) {
         return res.status(404).json({
             success: false,
             message: "please enter all fields",
@@ -27,9 +27,9 @@ const createDoctor = asyncHandler(async (req, res) => {
         })
     }
     if (!req.file) {
-        return res.status(404).json({ success: false, message: "please upload avatar for doctor" });
+        return res.status(404).json({ success: false, message: "Please upload a profile picture for the doctor" });
     }
-    const hashedPass=await bcrypt.hash(password,10)
+    const hashedPass = await bcrypt.hash(password, 10)
     const avatarResponse = await uploadOnCloudinary(req.file.buffer, req.file.originalName)
 
 
@@ -42,7 +42,7 @@ const createDoctor = asyncHandler(async (req, res) => {
         avatar: avatarResponse.secure_url,
         description,
         fees,
-        
+
     })
     res.status(200).json({ success: true, doctor, message: "doctor created successfully" });
 
@@ -51,16 +51,16 @@ const createDoctor = asyncHandler(async (req, res) => {
 const LoginDoctor = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        return res.status(401).json({ success: false, message: "please enter your email and password" });
+        return res.status(401).json({ success: false, message: "Please enter all fields" });
     }
 
     let doctor = await Doctor.findOne({ email });
     if (!doctor) {
-        return res.status(401).json({ success: false, message: "no doctor regsitered with this email" });
+        return res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
     const comparingPassword = await bcrypt.compare(password, doctor.password)
     if (!comparingPassword) {
-        return res.status(401).json({ success: false, message: "please enter correct password" });
+        return res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
     const doctorData = { doctorId: doctor._id }
     const token = jwt.sign(doctorData, process.env.ACCESS_TOKEN_SECRET, {
@@ -71,10 +71,10 @@ const LoginDoctor = asyncHandler(async (req, res) => {
         name: doctor.name,
         email: doctor.email,
         avatar: doctor.avatar,
-        specialization:doctor.specialization,
-        experience:doctor.experience,
-        availability:doctor.availability,
-        fees:doctor.fees
+        specialization: doctor.specialization,
+        experience: doctor.experience,
+        availability: doctor.availability,
+        fees: doctor.fees
     }
 
     const cookieOptions = {

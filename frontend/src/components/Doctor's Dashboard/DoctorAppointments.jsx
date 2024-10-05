@@ -1,22 +1,26 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch,  } from "react-icons/fa";
 import useFetchDoctorAppointments from "../../customHooks/useFetchDoctorAppointments";
 import { useSelector } from "react-redux";
 import { EditIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 
+
 const DoctorAppointments = () => {
   const navigate = useNavigate();
+
   const { doctorAppointments } = useSelector((store) => store.doctors);
   const { singleDoctor } = useSelector((store) => store.doctors);
   useFetchDoctorAppointments();
-
+  
   return (
     <div className="p-6 bg-gradient-to-r from-blue-900 to-gray-900 min-h-screen">
       <h1 className="text-center mb-5 text-white font-bold text-lg">
-        <span className="text-red-900">{singleDoctor?.name}'s</span> Appointments
+        <span className="text-red-900">{singleDoctor?.name}'s</span>{" "}
+        Appointments
       </h1>
+  
       <div className="flex shadow-md rounded-lg mb-3 overflow-x-auto max-w-3xl mx-auto">
         <Button
           onClick={() => navigate(-1)}
@@ -72,14 +76,14 @@ const DoctorAppointments = () => {
                   <span
                     className={`px-2 py-1 rounded-full text-white ${
                       appointment?.status === "completed"
-                        ? "bg-green-500" 
+                        ? "bg-green-500"
                         : appointment?.status === "accepted"
-                        ? "bg-blue-500" 
+                        ? "bg-blue-500"
                         : appointment?.status === "pending"
-                        ? "bg-gray-500" 
+                        ? "bg-gray-500"
                         : appointment?.status === "cancelled"
-                        ? "bg-red-500" 
-                        : "bg-yellow-500" 
+                        ? "bg-red-500"
+                        : "bg-yellow-500"
                     }`}
                   >
                     {appointment?.status}
