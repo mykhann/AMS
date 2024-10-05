@@ -23,6 +23,8 @@ import AddDoctor from "./components/Admin Dashboard/AddDoctor";
 import AdminAppointments from "./components/Admin Dashboard/AdminAppointments";
 import DoctorInfo from "./components/Admin Dashboard/DoctorInfo";
 import AboutPage from "./components/layout/AboutPage";
+import ProtectedAdminRoutes from "./components/Admin Dashboard/ProtectedAdminRoutes";
+import ProtectedDoctorRoutes from "./components/Doctor's Dashboard/ProtectedDoctorRoutes";
 
 const router = createBrowserRouter([
   // User profile
@@ -36,18 +38,18 @@ const router = createBrowserRouter([
   { path: "/about", element: <AboutPage /> },
 
   // Doctor profile
-  { path: "/doctor/dashboard", element: <Dashboard /> },
-  { path: "/doctor/view-appointments", element: <DoctorAppointments /> },
-  { path: "/doctor/manage-patients", element: <PatientsRecords /> },
-  { path: "/doctor/login", element: <DoctorLogin /> },
-  { path: "/doctor/update-appointment/:id", element: <UpdateAppointment /> },
+  { path: "/doctor/dashboard", element:<ProtectedDoctorRoutes>  <Dashboard /></ProtectedDoctorRoutes> },
+  { path: "/doctor/view-appointments", element:<ProtectedDoctorRoutes><DoctorAppointments /></ProtectedDoctorRoutes>  },
+  { path: "/doctor/manage-patients", element:<ProtectedDoctorRoutes><PatientsRecords /></ProtectedDoctorRoutes>  },
+  { path: "/doctor/login", element:<ProtectedDoctorRoutes><DoctorLogin /></ProtectedDoctorRoutes>  },
+  { path: "/doctor/update-appointment/:id", element:<ProtectedDoctorRoutes><UpdateAppointment /> </ProtectedDoctorRoutes> },
 
   // Admin Routes
-  { path: "/admin/dashboard", element: <AdminDashboard /> },
-  { path: "/admin/view-doctors", element: <DoctorTableUI /> },
-  { path: "/admin/add-doctor", element: <AddDoctor /> },
-  { path: "/admin/view-appointments", element: <AdminAppointments /> },
-  { path: "/admin/doctor-info/:id", element: <DoctorInfo /> },
+  { path: "/admin/dashboard", element:<ProtectedAdminRoutes><AdminDashboard /></ProtectedAdminRoutes>  },
+  { path: "/admin/view-doctors", element: <ProtectedAdminRoutes><DoctorTableUI /> </ProtectedAdminRoutes>},
+  { path: "/admin/add-doctor", element:<ProtectedAdminRoutes><AddDoctor /></ProtectedAdminRoutes>  },
+  { path: "/admin/view-appointments", element:<ProtectedAdminRoutes><AdminAppointments /></ProtectedAdminRoutes>  },
+  { path: "/admin/doctor-info/:id", element:<ProtectedAdminRoutes><DoctorInfo /> </ProtectedAdminRoutes>  },
 ]);
 
 function App() {
