@@ -37,7 +37,7 @@ const Signup = () => {
       formData.append("avatar",input.avatar)
     }
     try {
-      const res=await axios.post("http://localhost:8000/api/v1/users/register",formData,{
+      const res=await axios.post("https://healthcare-version-1.onrender.com/api/v1/users/register",formData,{
         headers:{"Content-Type":"multipart/form-data"},
         withCredentials:true
       })

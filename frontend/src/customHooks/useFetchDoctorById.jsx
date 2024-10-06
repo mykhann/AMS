@@ -13,7 +13,7 @@ const useFetchDoctorById = () => {
     useEffect(() => {
         const fetchDoctor = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/doctors/get-doctor/${doctorId}`);
+                const res = await axios.get(`https://healthcare-version-1.onrender.com/api/v1/doctors/get-doctor/${doctorId}`);
                 if (res.data.success) {
                     dispatch(setSingleDoctor(res.data.doctor));
                 }

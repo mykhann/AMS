@@ -22,7 +22,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/v1/users/login", input, { withCredentials: true });
+      const res = await axios.post("https://healthcare-version-1.onrender.com/api/v1/users/login", input, { withCredentials: true });
       if (res.data.success) {
         toast.success(res.data.message);
         navigate("/");

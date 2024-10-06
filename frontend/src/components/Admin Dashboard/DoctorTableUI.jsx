@@ -28,7 +28,7 @@ const DoctorTableUI = () => {
   const handleDelete = async (doctorId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/doctors/delete/${doctorId}`,
+        `https://healthcare-version-1.onrender.com/api/v1/doctors/delete/${doctorId}`,
         { withCredentials: true }
       );
       if (res.data.success) {

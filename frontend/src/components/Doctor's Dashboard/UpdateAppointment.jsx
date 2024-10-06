@@ -21,7 +21,7 @@ const UpdateAppointment = () => {
 
     try {
       const res = await axios.patch(
-        `http://localhost:8000/api/v1/appointments/update/${appointmentId}`,
+        `https://healthcare-version-1.onrender.com/api/v1/appointments/update/${appointmentId}`,
         input
       );
    

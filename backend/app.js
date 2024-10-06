@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser())
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://healthcare-version-1.onrender.com",
     credentials:true
 }))
 // routers

@@ -36,7 +36,7 @@ const EditProfile = () => {
     }
     try {
       const res = await axios.put(
-        "http://localhost:8000/api/v1/users/update-user",
+        "https://healthcare-version-1.onrender.com/api/v1/users/update-user",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

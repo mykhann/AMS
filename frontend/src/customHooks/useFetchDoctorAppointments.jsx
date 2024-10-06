@@ -10,7 +10,7 @@ const useFetchDoctorAppointments = () => {
   useEffect(()=>{
     const fetchDoctorAppointments=async()=>{
         try {
-            const res=await axios.get("http://localhost:8000/api/v1/appointments/doctor-appointments",{withCredentials:true})
+            const res=await axios.get("https://healthcare-version-1.onrender.com/api/v1/appointments/doctor-appointments",{withCredentials:true})
             if (res.data.success){
                 dispatch(setDoctorAppointments(res.data.appointments))
                 

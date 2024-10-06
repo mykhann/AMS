@@ -31,7 +31,7 @@ const AppointmentPage = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/v1/appointments/register-appointment/${doctorId}`,
+        `https://healthcare-version-1.onrender.com/api/v1/appointments/register-appointment/${doctorId}`,
         input,
         {
           headers: { "Content-Type": "application/json" },

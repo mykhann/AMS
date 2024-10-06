@@ -10,7 +10,7 @@ const useFetchAllDoctors = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/v1/doctors/get-all');
+        const res = await axios.get('https://healthcare-version-1.onrender.com/api/v1/doctors/get-all');
         if (res.data.success) {
           dispatch(setDoctors(res.data.doctors));  
         }
