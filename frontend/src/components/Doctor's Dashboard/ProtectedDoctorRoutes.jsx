@@ -6,10 +6,11 @@ const ProtectedDoctorRoutes = ({ children }) => {
   const { singleDoctor } = useSelector((store) => store.doctors);
   const navigate = useNavigate();
   useEffect(() => {
-    if (singleDoctor === null || singleDoctor !== "doctor") {
+    
+    if ( singleDoctor !== "doctor") {
       navigate("/doctor/login");
     }
-  });
+  },[]);
   return <>{children}</>;
 };
 

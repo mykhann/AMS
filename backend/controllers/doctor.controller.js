@@ -39,6 +39,7 @@ const createDoctor = asyncHandler(async (req, res) => {
         password: hashedPass,
         specialization,
         experience,
+        
         avatar: avatarResponse.secure_url,
         description,
         fees,
@@ -139,7 +140,7 @@ const updateDoctor = asyncHandler(async (req, res) => {
 });
 
 const getAllDoctors = asyncHandler(async (req, res) => {
-    const doctors = await Doctor.find();
+    const doctors = await Doctor.find().sort({createdAt:-1});
     if (!doctors) {
         return res.status(404).json({ success: false, message: "Doctors not found" });
     }

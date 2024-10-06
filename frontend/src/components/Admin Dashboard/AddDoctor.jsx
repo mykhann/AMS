@@ -62,8 +62,6 @@ const AddDoctor = () => {
         
        }
 
-        
-        console.log(input);
     };
 
     return (

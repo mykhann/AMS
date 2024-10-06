@@ -1,10 +1,13 @@
+
 import Home from "./components/layout/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DoctorsList from "./components/Doctors/DoctorsList";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import { Provider } from "react-redux";
+import { PersistGate } from 'redux-persist/integration/react'; 
 import store from "./reduxStore/store";
+import { persistor } from "./reduxStore/store"; 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.css";
@@ -25,6 +28,7 @@ import DoctorInfo from "./components/Admin Dashboard/DoctorInfo";
 import AboutPage from "./components/layout/AboutPage";
 import ProtectedAdminRoutes from "./components/Admin Dashboard/ProtectedAdminRoutes";
 import ProtectedDoctorRoutes from "./components/Doctor's Dashboard/ProtectedDoctorRoutes";
+import AppointmentHistory from "./components/profile/AppointmentHistory";
 
 const router = createBrowserRouter([
   // User profile
@@ -36,29 +40,32 @@ const router = createBrowserRouter([
   { path: "/profile", element: <ProfilePage /> },
   { path: "/appointment/:id", element: <AppointmentPage /> },
   { path: "/about", element: <AboutPage /> },
+  { path: "/profile/appointments", element: <AppointmentHistory /> },
 
   // Doctor profile
-  { path: "/doctor/dashboard", element:<ProtectedDoctorRoutes>  <Dashboard /></ProtectedDoctorRoutes> },
-  { path: "/doctor/view-appointments", element:<ProtectedDoctorRoutes><DoctorAppointments /></ProtectedDoctorRoutes>  },
-  { path: "/doctor/manage-patients", element:<ProtectedDoctorRoutes><PatientsRecords /></ProtectedDoctorRoutes>  },
-  { path: "/doctor/login", element:<ProtectedDoctorRoutes><DoctorLogin /></ProtectedDoctorRoutes>  },
-  { path: "/doctor/update-appointment/:id", element:<ProtectedDoctorRoutes><UpdateAppointment /> </ProtectedDoctorRoutes> },
+  { path: "/doctor/dashboard", element: <ProtectedDoctorRoutes><Dashboard /></ProtectedDoctorRoutes> },
+  { path: "/doctor/view-appointments", element: <ProtectedDoctorRoutes><DoctorAppointments /></ProtectedDoctorRoutes> },
+  { path: "/doctor/manage-patients", element: <ProtectedDoctorRoutes><PatientsRecords /></ProtectedDoctorRoutes> },
+  { path: "/doctor/login", element: <ProtectedDoctorRoutes><DoctorLogin /></ProtectedDoctorRoutes> },
+  { path: "/doctor/update-appointment/:id", element: <ProtectedDoctorRoutes><UpdateAppointment /></ProtectedDoctorRoutes> },
 
   // Admin Routes
-  { path: "/admin/dashboard", element:<ProtectedAdminRoutes><AdminDashboard /></ProtectedAdminRoutes>  },
-  { path: "/admin/view-doctors", element: <ProtectedAdminRoutes><DoctorTableUI /> </ProtectedAdminRoutes>},
-  { path: "/admin/add-doctor", element:<ProtectedAdminRoutes><AddDoctor /></ProtectedAdminRoutes>  },
-  { path: "/admin/view-appointments", element:<ProtectedAdminRoutes><AdminAppointments /></ProtectedAdminRoutes>  },
-  { path: "/admin/doctor-info/:id", element:<ProtectedAdminRoutes><DoctorInfo /> </ProtectedAdminRoutes>  },
+  { path: "/admin/dashboard", element: <ProtectedAdminRoutes><AdminDashboard /></ProtectedAdminRoutes> },
+  { path: "/admin/view-doctors", element: <ProtectedAdminRoutes><DoctorTableUI /></ProtectedAdminRoutes> },
+  { path: "/admin/add-doctor", element: <ProtectedAdminRoutes><AddDoctor /></ProtectedAdminRoutes> },
+  { path: "/admin/view-appointments", element: <ProtectedAdminRoutes><AdminAppointments /></ProtectedAdminRoutes> },
+  { path: "/admin/doctor-info/:id", element: <ProtectedAdminRoutes><DoctorInfo /></ProtectedAdminRoutes> },
 ]);
 
 function App() {
   return (
     <Provider store={store}>
-      <NextUIProvider>
-        <RouterProvider router={router} />
-        <ToastContainer position="bottom-right" autoClose={700} pauseOnHover />
-      </NextUIProvider>
+      <PersistGate loading={null} persistor={persistor}> 
+        <NextUIProvider>
+          <RouterProvider router={router} />
+          <ToastContainer position="bottom-right" autoClose={700} pauseOnHover />
+        </NextUIProvider>
+      </PersistGate>
     </Provider>
   );
 }

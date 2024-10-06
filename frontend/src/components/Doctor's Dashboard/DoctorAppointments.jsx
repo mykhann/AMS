@@ -1,26 +1,28 @@
-import React from "react";
-import { FaSearch,  } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import useFetchDoctorAppointments from "../../customHooks/useFetchDoctorAppointments";
 import { useSelector } from "react-redux";
 import { EditIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 
-
 const DoctorAppointments = () => {
   const navigate = useNavigate();
-
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const { doctorAppointments } = useSelector((store) => store.doctors);
+  const filteredAppointments = doctorAppointments.filter((appointment) =>
+    appointment.patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   const { singleDoctor } = useSelector((store) => store.doctors);
   useFetchDoctorAppointments();
-  
+
   return (
     <div className="p-6 bg-gradient-to-r from-blue-900 to-gray-900 min-h-screen">
       <h1 className="text-center mb-5 text-white font-bold text-lg">
-        <span className="text-red-900">{singleDoctor?.name}'s</span>{" "}
-        Appointments
+        <span className="text-red-900">{singleDoctor?.name}'s</span> Appointments
       </h1>
-  
+
       <div className="flex shadow-md rounded-lg mb-3 overflow-x-auto max-w-3xl mx-auto">
         <Button
           onClick={() => navigate(-1)}
@@ -32,6 +34,8 @@ const DoctorAppointments = () => {
         <div className="flex space-x-2 ml-4 items-center">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search patient..."
             className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
           />
@@ -47,13 +51,14 @@ const DoctorAppointments = () => {
             <tr className="text-black text-left">
               <th className="px-4 py-2">Patient Info</th>
               <th className="px-4 py-2">Date</th>
-              <th className="px-4 py-2">Time</th>
+              {/* Hide Time column on mobile */}
+              <th className="hidden md:table-cell px-4 py-2">Time</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {doctorAppointments.map((appointment) => (
+            {filteredAppointments.map((appointment) => (
               <tr
                 key={appointment.id}
                 className="border-b text-black hover:bg-gray-200 transition"
@@ -62,14 +67,15 @@ const DoctorAppointments = () => {
                   <img
                     src={appointment?.patient.avatar}
                     alt={`${appointment?.patient.name}'s photo`}
-                    className="h-20 w-20 md:h-20 md:w-20 rounded-full object-cover object-top" // Ensure rounded-full is applied
+                    className="h-20 w-20 md:h-20 md:w-20 rounded-full object-cover object-top"
                   />
                   <span>{appointment?.patient.name}</span>
                 </td>
                 <td className="px-4 py-2 text-sm md:text-base">
                   {new Date(appointment?.date).toLocaleDateString()}
                 </td>
-                <td className="px-4 py-2 text-sm md:text-base">
+                {/* Time column will be hidden on mobile */}
+                <td className="hidden md:table-cell px-4 py-2 text-sm md:text-base">
                   {appointment?.time}
                 </td>
                 <td className="px-4 py-2 text-sm md:text-base">

@@ -9,13 +9,10 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { singleDoctor } = useSelector((store) => store.doctors);
 
-  useEffect(() => {
-    if (!singleDoctor) {
-      navigate("/doctor/login");
-    }
-  }, [singleDoctor, navigate]);
+  
   const handleLogout = () => {
     dispatch(setSingleDoctor(null))
+    navigate("/doctor/login")
   }
 
   return (

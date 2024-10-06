@@ -123,7 +123,7 @@ const getAppointmentById = asyncHandler(async (req, res) => {
 
 const getDoctorAppointments = asyncHandler(async (req, res) => {
     const doctorId = req.user._id;
-    const appointments = await Appointment.find({ doctor: doctorId }).populate("patient")
+    const appointments = await Appointment.find({ doctor: doctorId }).sort({createdAt:-1}).populate("patient")
     if (!appointments) {
         return res.status(404).json({
             success: false,
@@ -144,7 +144,7 @@ const getDoctorAppointments = asyncHandler(async (req, res) => {
 
 
 const getAllAppointments = asyncHandler(async (req, res) => {
-    const appointments = await Appointment.find().populate("doctor").populate("patient")
+    const appointments = await Appointment.find().sort({createdAt:-1}).populate("doctor").populate("patient")
     res.status(200).json({
         success: true,
         appointments

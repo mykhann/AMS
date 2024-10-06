@@ -24,7 +24,7 @@ const UpdateAppointment = () => {
         `http://localhost:8000/api/v1/appointments/update/${appointmentId}`,
         input
       );
-      console.log(res.data);
+   
       if (res.data.success) {
         navigate(-1);
       }

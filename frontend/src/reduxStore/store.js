@@ -1,14 +1,49 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
-import appointmentsSlice from "./appointmentsSlice";
-import doctorsSlice from "./doctorsSlice";
+import appointmentSlice from "../reduxStore/appointmentsSlice";
+import doctorsSlice from "../reduxStore/doctorsSlice";
 
-const store=configureStore({
-    reducer:{
-        auth:authSlice,
-        appointments:appointmentsSlice,
-        doctors:doctorsSlice
-    }
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
+
+const persistConfig = {
+    key: 'root',
+    version: 1,
+    storage,
+}
+
+const rootReducer = combineReducers({
+    auth: authSlice,
+    appointments: appointmentSlice,
+    doctors: doctorsSlice
+})
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+
+
+const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
 })
 
+
+export const persistor = persistStore(store);
+
 export default store
+
+

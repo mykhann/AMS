@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxStore/authSlice";
 import { toast } from "react-toastify";
+import Footer from "../layout/Footer";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ const Login = () => {
          
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

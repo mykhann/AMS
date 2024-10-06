@@ -9,7 +9,7 @@ const doctorSlice=createSlice({
     },
     reducers:{
         setDoctors:(state,action)=>{
-            state.doctors=action.payload
+            state.doctors = Array.isArray(action.payload) ? action.payload : [];
         } ,
         setSingleDoctor:(state,action)=>{
             state.singleDoctor=action.payload

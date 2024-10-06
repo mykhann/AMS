@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../reduxStore/authSlice";
 import { toast } from "react-toastify";
 import { setSingleDoctor } from "../../reduxStore/doctorsSlice";
+import Footer from "../layout/Footer";
 
 const DoctorLogin = () => {
   const navigate = useNavigate();
@@ -77,7 +78,9 @@ const DoctorLogin = () => {
             </Link>
           </div>
         </div>
+      
       </div>
+      <Footer/>
     </>
   );
 };

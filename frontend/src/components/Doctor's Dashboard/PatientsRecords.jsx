@@ -21,6 +21,9 @@ const PatientsRecords = () => {
   const cancelledAppointments = doctorAppointments.filter(
     (appointment) => appointment.status === "cancelled"
   ).length;
+  const acceptedAppointments = doctorAppointments.filter(
+    (appointment) => appointment.status === "accepted"
+  ).length;
 
   return (
     <div className="p-6 bg-gradient-to-r from-blue-900 to-gray-900 min-h-screen">
@@ -31,7 +34,7 @@ const PatientsRecords = () => {
         <div className="flex items-center">
           <FaUser className="mr-2 text-blue-500" />
           <span className="text-xl font-semibold text-white">
-            {totalPatients} Total Patients
+           All Patients ({totalPatients})
           </span>
         </div>
       </div>
@@ -41,19 +44,25 @@ const PatientsRecords = () => {
           <h3 className="text-xl font-semibold text-gray-800">
             Pending Appointments
           </h3>
-          <p className="text-2xl text-blue-600">{pendingAppointments}</p>
+          <p className="text-2xl text-blue-600">({pendingAppointments})</p>
         </div>
         <div className="bg-green-400 shadow-md rounded-lg p-4 text-center">
           <h3 className="text-xl font-semibold text-white">
             Successful Appointments
           </h3>
-          <p className="text-2xl text-white">{complettedAppointments}</p>
+          <p className="text-2xl text-white">({complettedAppointments})</p>
         </div>
         <div className="bg-yellow-900 shadow-md rounded-lg p-4 text-center">
           <h3 className="text-xl font-semibold text-white">
             Cancelled Appointments
           </h3>
-          <p className="text-2xl text-white">{cancelledAppointments}</p>
+          <p className="text-2xl text-white">({cancelledAppointments})</p>
+        </div>
+        <div className="bg-blue-900 shadow-md rounded-lg p-4 text-center">
+          <h3 className="text-xl font-semibold text-white">
+            Accepted Appointments
+          </h3>
+          <p className="text-2xl text-white">({acceptedAppointments})</p>
         </div>
       </div>
     </div>

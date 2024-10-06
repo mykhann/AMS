@@ -4,11 +4,11 @@ import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { setUser } from "../../reduxStore/authSlice";
-import { useDispatch } from "react-redux";
+
+import Footer from "../layout/Footer";
 
 const Signup = () => {
-  const dispatch=useDispatch();
+
   const navigate=useNavigate()
   const [input, setInput] = useState({
     name: "",
@@ -42,8 +42,8 @@ const Signup = () => {
         withCredentials:true
       })
       if (res.data.success){
-       dispatch(setUser(res.data.user))
-       navigate("/")
+       
+       navigate("/login")
        toast.success(res.data.message)
 
       }
@@ -62,7 +62,6 @@ const Signup = () => {
           <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
           <hr />
           <form onSubmit={submitHandler}>
-            {/* Profile Picture Input */}
             <div className="mb-4">
               
               <div className="flex items-center mt-1">
@@ -81,7 +80,6 @@ const Signup = () => {
               </div>
             </div>
 
-            {/* Name Input */}
             <div className="mb-4">
               
               <input
@@ -95,7 +93,6 @@ const Signup = () => {
               />
             </div>
 
-            {/* Email Input */}
             <div className="mb-4">
              
               <input
@@ -109,7 +106,6 @@ const Signup = () => {
               />
             </div>
 
-            {/* Password Input */}
             <div className="mb-4">
              
               <input
@@ -123,7 +119,7 @@ const Signup = () => {
               />
             </div>
 
-            {/* Phone Input */}
+        
             <div className="mb-4">
              
               <input
@@ -137,7 +133,7 @@ const Signup = () => {
               />
             </div>
 
-            {/* Submit Button */}
+         
             <button
               type="submit"
               className="w-full bg-red-900 text-white p-2 rounded-md hover:bg-red-600"
@@ -146,7 +142,6 @@ const Signup = () => {
             </button>
           </form>
 
-          {/* Link to Login */}
           <div className="flex justify-center mt-2">
             <Link to="/login">
               <p className="font-medium cursor-pointer text-gray-900 hover:text-blue-600">
@@ -156,6 +151,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

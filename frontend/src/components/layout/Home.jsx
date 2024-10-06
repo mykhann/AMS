@@ -3,6 +3,7 @@ import Hero from './Hero'
 import Navbar from '../shared/Navbar'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import Footer from './Footer'
 
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
     <div>
         <Navbar/>
         <Hero/>
+        <Footer/>
     </div>
   )
 }
